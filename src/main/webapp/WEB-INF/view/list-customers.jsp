@@ -19,7 +19,7 @@
         <div>
             <div>
                  <input type="button" value="Add new"
-                        onclick="window.location.href='showFormForAdd'; return false;"
+                        onclick="window.location.href='show-add-form'; return false;"
                  />
 
                 <table border="1">
@@ -32,7 +32,7 @@
                     </tr>
 
                     <c:forEach var="customer" items="${customers}">
-                        <c:url var="updateLink" value="/customer/showFormForUpdate">
+                        <c:url var="updateLink" value="/customer/show-edit-form">
                             <c:param name="id" value="${customer.id}"/>
                         </c:url>
                         <c:url var="deleteLink" value="/customer/delete">
