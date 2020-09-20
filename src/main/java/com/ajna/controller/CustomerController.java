@@ -10,13 +10,13 @@ import com.ajna.service.CustomersService;
 import java.util.List;
 
 @Controller
-@RequestMapping("/customer")
+@RequestMapping("/customers")
 public class CustomerController {
 
     @Autowired
     private CustomersService customersService;
 
-    @GetMapping("/list")
+    @GetMapping("")
     public String listCustomers(Model model){
         List<Customer> customers = customersService.getCustomers();
         model.addAttribute("customers", customers);
@@ -24,7 +24,7 @@ public class CustomerController {
         return "list-customers";
     }
 
-    @GetMapping("/show-add-form")
+    @GetMapping("/new")
     public String showAddForm(Model model){
 
         Customer customer = new Customer();
@@ -33,8 +33,9 @@ public class CustomerController {
         return "add-edit-customer";
     }
 
-    @GetMapping("/show-edit-form")
-    public String showEditForm(@RequestParam int id, Model model){
+
+    @GetMapping("/{id}/edit")
+    public String showEditForm(@PathVariable int id, Model model){
 
         Customer customer = customersService.getCustomer(id);
         model.addAttribute("customer", customer);
@@ -42,15 +43,15 @@ public class CustomerController {
         return "add-edit-customer";
     }
 
-    @PostMapping("/save-customer")
+    @PostMapping({"/{id}/edit", "/new"})
     public String saveCustomer(@ModelAttribute Customer customer){
         customersService.saveCustomer(customer);
-        return "redirect:/customer/list";
+        return "redirect:/customers/";
     }
 
-    @GetMapping("delete")
-    public String deleteCustomer(@RequestParam int id){
+    @GetMapping("/{id}/delete")
+    public String deleteCustomer(@PathVariable int id){
         customersService.deleteCustomer(id);
-        return "redirect:/customer/list";
+        return "redirect:/customers/";
     }
 }
